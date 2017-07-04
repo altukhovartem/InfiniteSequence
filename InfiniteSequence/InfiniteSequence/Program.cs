@@ -11,23 +11,48 @@ namespace InfiniteSequence
         static void Main(string[] args)
         {
             int x = new Random().Next(1, 100000);
+            x = 13;
+            Console.WriteLine(x);
             Console.WriteLine(Mid(x));
 
-
-            IEnumerable<int> currentSequence = Generate(x);
+            Generate(x);
         }
 
-        private static IEnumerable<int> Generate(int x)
+        private static void Generate(int x)
         {
-            List<int> resultSequence = new List<int>();
-            resultSequence.Add(x);
-            return resultSequence;
+            while(true)
+            {
+                Console.WriteLine(x);
+                x = Mid(x*x);
+                Console.ReadKey();
+            }
         }
 
         private static int Mid(int num)
         {
-            var resultStr = string.Join(string.Empty, num.ToString().Take(4).Skip(1));
+            var resultStr = string.Join(string.Empty, num.ToString().Take(num.ToString().Length - 3));
+            if (num.ToString().Length == 1)
+            {
+                return 0;
+            }
+            else if (num.ToString().Length == 2)
+            {
+                resultStr = string.Join(string.Empty, num.ToString().Take(1));
+            }
+            else if (num.ToString().Length == 3)
+            {
+                resultStr = string.Join(string.Empty, num.ToString().Take(2));
+            }
+            else if (num.ToString().Length == 4)
+            {
+                resultStr = string.Join(string.Empty, num.ToString().Take(3));
+            }
+            else if (num.ToString().Length > 4)
+            {
+                resultStr = string.Join(string.Empty, num.ToString().Skip(num.ToString().Length - 4).Take(3));
+            }
             return int.Parse(resultStr);
+
         }
     }
 }

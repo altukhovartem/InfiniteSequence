@@ -12,47 +12,33 @@ namespace InfiniteSequence
         {
             int x = new Random().Next(1, 100000);
             x = 13;
-            Console.WriteLine(x);
-            Console.WriteLine(Mid(x));
-
-            Generate(x);
+            foreach (int item in Generate(x))
+            {
+                Console.WriteLine(item);
+                Console.ReadKey();
+            }
         }
 
-        private static void Generate(int x)
+        private static IEnumerable<int> Generate(int x)
         {
             while(true)
             {
-                Console.WriteLine(x);
-                x = Mid(x*x);
-                Console.ReadKey();
+                int midResult = Mid(x * x);
+                yield return midResult;
+                x = midResult;
             }
         }
 
         private static int Mid(int num)
         {
-            var resultStr = string.Join(string.Empty, num.ToString().Take(num.ToString().Length - 3));
-            if (num.ToString().Length == 1)
+            if (num < 10)
             {
                 return 0;
             }
-            else if (num.ToString().Length == 2)
+            else
             {
-                resultStr = string.Join(string.Empty, num.ToString().Take(1));
+                return int.Parse(string.Join("", num.ToString().Reverse().Take(4).Skip(1).Reverse()));
             }
-            else if (num.ToString().Length == 3)
-            {
-                resultStr = string.Join(string.Empty, num.ToString().Take(2));
-            }
-            else if (num.ToString().Length == 4)
-            {
-                resultStr = string.Join(string.Empty, num.ToString().Take(3));
-            }
-            else if (num.ToString().Length > 4)
-            {
-                resultStr = string.Join(string.Empty, num.ToString().Skip(num.ToString().Length - 4).Take(3));
-            }
-            return int.Parse(resultStr);
-
         }
     }
 }
